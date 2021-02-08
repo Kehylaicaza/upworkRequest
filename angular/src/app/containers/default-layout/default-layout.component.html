@@ -1,0 +1,134 @@
+<!--  ----------------
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/LOGO2.png', width: 100, height: 35, alt: 'Logo Digifile'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
+  [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+
+-->
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]=false
+  [navbarBrandFull]="{src: 'assets/img/brand/logo-digifile-test.png', width: 100, height: 35, alt: 'Logo Digifile'}">
+  <ul class="nav navbar-nav d-md-down-none" style="color: white;">
+    <!-- <li class="nav-item px-3">
+      <a class="nav-link" href="#">Dashboard</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Users</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Settings</a>
+    </li> -->
+  </ul>
+  <ul class="nav2 navbar-nav ml-auto">
+
+
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <i class="fa fa-bell" style="color: white;"></i><span
+          class="badge badge-pill badge-danger">{{totalNotificaciones}}</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown" style="width:300px">
+
+        <ul class="event-list">
+          <li class="notification-box">
+            <strong>Notificaciones</strong>
+          </li>
+
+          <li *ngIf="totalNotificaciones==0" class="notification-box">
+            <strong class="text-info">Ninguna actividad nueva</strong>
+          </li>
+
+          <li  class="notification-box" *ngFor="let p of notificationViews;let i = index">
+            <p> <span class="badge badge-primary">{{p.by}}</span> {{p.mensaje}} </p>
+           
+
+                <p> <small class="dropdown-item" class="fecha">{{p.fecha}}</small> <span class="buttonEyes">
+                 <a  style="margin-right: 10px;"
+                 (click)="eliminar(p)" title="Marcar como leído">  <i class="fa fa-circle" style="font-weight: regular;"></i></a>
+             <a style="margin-right: 10px;" title="Ver Notificación" (click)="ver(p)"><i class="fa fa-eye" ></i></a>
+         </span> </p>
+
+          </li>
+
+          <li  class="notification-box allNoti">
+           
+            <p> <span  > 
+              <a  routerLink="/notifications-list" >Todas las notificaciones</a>
+                </span> </p>
+
+          </li>
+        </ul>
+
+
+
+      </div>
+    </li>
+
+
+    <!--Perfil-------------------------------------------------------------->
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <!-- <img src="../../../assets/img/brand/perfil-avatar-hombre-icono-redondo_24640-14044.jpg" class="img-avatar"
+          alt="admin@bootstrapmaster.com" />-->
+        <ngx-avatar bgColor="#ffff" fgColor="#3b71c2" name="{{ this.user.name}}" size="35"></ngx-avatar>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Mi cuenta</strong></div>
+        <p class="dropdown-item" routerLink="/profile" style="text-align: center;font-weight: bold;cursor:pointer">
+          {{ this.user.name}}
+        </p>
+        <!-- <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i>Actualizaciones<span class="badge badge-info">42</span></a> -->
+        <!-- <a class="dropdown-item" routerLink="/profile"><i class="fa fa-user"></i> Perfil</a> -->
+        <div class="dropdown-header text-center"><strong>Configuraciones</strong></div>
+        <a class="dropdown-item" routerLink="/change-pass"><i class="fa fa-usd"></i> Cambiar Contraseña</a>
+        <div class="divider"></div>
+
+        <a *ngIf="user.rol == 'Administrador'" class="dropdown-item" routerLink="/principal"><i
+            class="fa fa-toggle-on"></i>Mis Empresas</a>
+
+        <a class="dropdown-item" href="#" (click)="authService.logout()"><i class="fa fa-lock"></i> Cerrar Sesión</a>
+      </div>
+    </li>
+
+    <!----------------------------------------------------------------------------------->
+
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar #appSidebar [fixed]="true" [display]="'md'" [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" *ngIf="user.rol == 'Usuario'" [perfectScrollbar]
+      [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-nav [navItems]="navItemsAdmin" *ngIf="user.rol === 'Administrador'" [perfectScrollbar]
+      [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-nav [navItems]="navItemsSuper" *ngIf="user.rol == 'super-admin'" [perfectScrollbar]
+      [disabled]="appSidebar.minimized"></app-sidebar-nav>
+
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <!-- breaking change 'cui-breadcrumb' 
+    <cui-breadcrumb>-->
+      <!-- Breadcrumb Menu
+      <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+        </div>
+      </li>
+    </cui-breadcrumb>-->
+
+    <div class="container-fluid" style="padding-top: 15px;">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+
+
+</div>
+<app-footer>
+  <span><a href="http://www.dox-ec.com/"  target="_blank">Digifile</a> &copy; 2020.</span>
+  <span class="ml-auto">Powered by <a href="http://www.dox-ec.com/"  target="_blank"><img width="50px"
+        src="assets/img/brand/dox_logo.png" alt="logo"></a></span>
+</app-footer>

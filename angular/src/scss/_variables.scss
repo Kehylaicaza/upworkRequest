@@ -1,0 +1,131 @@
+// Variable overrides
+
+
+
+
+
+
+
+
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    color:white;
+    //background: #183c72;
+    background-image: url(../assets/back.jpg);
+}
+
+
+
+
+.sidebar > .sidebar-nav {
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 5px 5px 5px 3px  #1c4e9926;
+}
+
+.sidebar .nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: white;
+    text-decoration: none;
+    background: #4e86d947
+}
+
+.sidebar .nav-dropdown.open .nav-link {
+    color: white;
+    border-left: 0;
+    background: transparent
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background: #3265B3;
+}
+.sidebar .nav-dropdown.open .nav-link:hover {
+    color: #fff;
+    background: rgb(59, 113, 194);
+}
+
+.sidebar .nav-link:hover {
+    color: #fff;
+    background: rgb(59, 113, 194);
+}
+
+.dashi {
+    color:white;
+   // background: linear-gradient(90deg, rgba(28,78,153,1) 0%, rgba(0,212,255,1) 100%);
+   background: #183c7259;
+   font-weight: bold;
+   box-shadow: 10px 15px 10px 15px  #1c4e9926;
+}
+
+.sidebar .nav-link a:first-child {
+    color: white;
+    background: transparent
+}
+
+
+.header-fixed .app-header {
+    position: fixed;
+    z-index: 1020;
+    width: 100%;
+    color: #fff;
+    background: rgb(59, 113, 194);
+    box-shadow: 2px 2px 2px 2px  #1c4e9926;
+}
+
+
+.sidebar .nav-link .nav-icon {
+    display: inline-block;
+    width: 1.09375rem;
+    margin: 0 0.5rem 0 0;
+    font-size: 0.875rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.app-header .navbar-toggler-icon {
+    height: 23px;
+    background-image: url(../assets/bar.png);
+}
+
+.dx-theme-generic-typography a {
+    color: #5d676f;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #66a4ea;
+    border-color: #4dbd7400;
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background: #599bff00;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5c6873;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #cbd6e0 !important;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.datosField{
+    font-weight: 640;
+    font-size: 14px;
+}

@@ -1,0 +1,83 @@
+.w-25 {
+  width: 25% !important;
+}
+.card1{
+  background-color: #3b71c2 !important;
+  color:white !important;
+}
+
+.card2{
+  background-color: white !important;
+  color:#3b71c2!important;
+}
+
+
+
+.prueba1{
+  text-align: center;
+}
+
+.tc h2{
+font-size: 3rem;
+}
+
+.colorF{
+background-color: #20a8d8;
+}
+.colorF2{
+background-color: #2b85cd;
+}
+
+.colorF3{
+background-color: #226aa4;
+}
+.colorF4{
+background-color: #0061a9;
+}
+
+
+
+.tam2{
+margin-right: 1em;
+margin-top: 1em;
+}
+
+.btn-success{
+background-color: white;
+color: black;
+font-weight: bold;
+border-color: white;
+}
+
+::ng-deep .dx-datagrid-text-content {
+text-align: center;
+}
+
+::ng-deep .dx-text-content-alignment-right{
+text-align: center;
+}
+
+
+.subscription{
+  text-align: center;
+  padding: 10px 10px;
+  color: rgb(255, 255, 255) !important;
+  background-color: #007bff;
+  border-radius: .25rem;
+  cursor: pointer;
+  
+
+}
+
+
+.subscriptionActive{
+  text-align: center;
+  padding: 10px 10px;
+  color: rgb(255, 255, 255) !important;
+  background-color:#9ecdff;
+  border-radius: .25rem;
+  cursor: pointer;
+  
+
+}
+

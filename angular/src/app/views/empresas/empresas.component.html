@@ -1,0 +1,340 @@
+
+
+    <div class="card mb-3">
+          
+    <div class="card-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2><strong>Empresas</strong> </h2>
+            </div>
+            <div class="col-sm-6">
+                <div class="col-sm-6">
+                   
+                </div>
+                
+                <div class="col-sm-3" style="align-items:right;float: right;">
+                    <button title="Ver Empresas" class="btn btn-primary btnIcons2" (click)="mostrar(1)">
+                        <i class="fa fa-list fa-2x"></i>
+                    </button>
+                
+                </div>
+                <div class="col-sm-3" style="align-items:right;float: right;">
+                    <button title="Nueva Empresa" class="btn btn-primary btnIcons2" (click)="mostrar(2)">
+                        <img src="../../../assets/empresas.png" alt="" style="width:34px;">
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div class="card-body">
+    
+            <div class="row">
+                
+                <div class="col-md-12 card carIn">
+                    <div id="read" style="display: block;text-align: center;">
+                        <br>
+                      
+                        <dx-data-grid id="gridContainer" [dataSource]="empresasService.empresa" [showBorders]="true">
+                            <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+                            <dxi-column dataField="_id" caption="Nombre" [visible]="false"></dxi-column>
+                            <dxi-column dataField="nombre" caption="Nombre"></dxi-column>
+                            <dxi-column dataField="representante" caption="Representante"></dxi-column>
+                            <dxi-column dataField="email_administrador" caption="Email Administrador" [visible]="false"></dxi-column>
+                            <dxi-column dataField="ruc" caption="RUC"></dxi-column>
+                            <dxi-column dataField="direccion" caption="Dirección"></dxi-column>
+                            <dxi-column dataField="numUsuarios" caption="Limite Usuarios" width="15%"></dxi-column>
+                            <dxi-column type="buttons" dataField="bt1" caption="Acciones" width="10%">
+                                <dxi-button hint="Editar" icon="fa fa-pencil-square-o" [onClick]="mostrarUpdateEmpresa"></dxi-button>
+                                <dxi-button hint="Eliminar" icon="fa fa-trash-o" [onClick]="deleteEmpresa"></dxi-button>
+                            </dxi-column>
+                            <dxo-paging [pageSize]="5"></dxo-paging>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true">
+                            </dxo-pager>
+    
+                        </dx-data-grid>
+                        <br><br>
+                    </div>
+    
+    
+    
+                    <div id="new" style="display: none;">
+                        <div style="text-align: center;" class="newr">
+                            <h1><strong> Registrar Nueva Empresa</strong></h1>
+                            <img class="img-responsive" src="../../../assets/img/brand/empresa-icon-png-3.png" alt="">
+                            <div>
+                                <form #f="ngForm" (ngSubmit)="register(f)" >
+    
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Nombre Empresa</label>   </div>
+                                                <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.nombre"
+                                                        name="nombre" autocomplete="off" class="form-control" placeholder="Nombre empresa"
+                                                        required></div>
+                                            </div>
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Representante</label> </div>
+                                                <div class="col-md-8"> <input type="text"
+                                                        [(ngModel)]="empresa.representante" name="representante"
+                                                        class="form-control" placeholder="Representante"
+                                                        autocomplete="off" required></div>
+                                            </div>
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Dirección</label> </div>
+                                                <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.direccion"
+                                                        name="direccion" autocomplete="off" class="form-control" placeholder="Dirección"
+                                                        required></div>
+                                            </div>
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"> <label class="datosField">RUC</label>  </div>
+                                                <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.ruc"
+                                                        name="direccion" autocomplete="off" class="form-control" placeholder="RUC" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Inicio de Licencia</label></div>
+                                                <div class="col-md-8"> <input type="date" [(ngModel)]="empresa.license_begin" data-date-format="YYYY MMMM DD"
+                                                        name="license_begin" autocomplete="off" class="form-control"  required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Fin de Licencia</label> </div>
+                                                <div class="col-md-8"> <input type="date" [(ngModel)]="empresa.license_end" data-date-format="YYYY MMMM DD"
+                                                        name="license_end" autocomplete="off" class="form-control" required>
+                                                </div>
+                                            </div>
+                                          <!--   <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;">Correo empresarial</div>
+                                                <div class="col-md-8"> <input type="email"
+                                                        [(ngModel)]="empresa.email_empresarial" name="email_empresarial"
+                                                        class="form-control" placeholder="Correo empresarial" required>
+                                                </div>
+                                            </div>
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;">Correo administrador</div>
+                                                <div class="col-md-8"> <input type="email"
+                                                        [(ngModel)]="empresa.email_administrador" name="email_administrador"
+                                                        class="form-control" placeholder="Correo administrador" required>
+                                                </div>
+                                            </div>
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;">Contraseña</div>
+                                                <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.contrasena"
+                                                        name="contraseña" class="form-control" placeholder="Contraseña"
+                                                        required></div>
+                                            </div> -->
+                                            <div class="row espacio">
+                                                <div class="col-md-4" style="text-align: left;"><label class="datosField">Numero de Usuarios</label></div>
+                                                <div class="col-md-8"> <input type="number"
+                                                        [(ngModel)]="empresa.numUsuarios" name="numUsuarios" min="0" 
+                                                        class="form-control" autocomplete="off" placeholder="Numero usuarios" required></div>
+                                            </div>
+    
+                                            <div class="row espacio">
+
+                                                <div class="col-md-2" style="text-align: left;"></div>
+                                                <div class="col-md-8">
+                                                    <button class="btn btn-block btn-success espacio">Registrar Empresa</button>
+                                                </div>
+                                                <div class="col-md-2" style="text-align: left;"></div>
+                                            </div>
+    
+                                           
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+    
+    
+                                </form>
+                            </div>
+                        </div>
+    
+                    </div>
+
+                    <div id="edit" style="display: none;">
+                        <div class="row">
+                            <br>
+                            <div class="col-md-12" style="text-align: center;"> <h1><strong>Editar Empresa</strong> </h1></div>
+                           
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">Nombre Empresa</label> </div>
+                                            <div class="col-md-8"> <input type="text" [(ngModel)]="empresa2.nombre" name="nombre"
+                                                    class="form-control" autocomplete="off" placeholder="Nombre empresa" required></div>
+                                        </div>
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">Representante</label> </div>
+                                            <div class="col-md-8"> <input type="text" [(ngModel)]="empresa2.representante" name="representante"
+                                                    class="form-control" autocomplete="off" placeholder="Representante" autocomplete="representante" required></div>
+                                        </div>
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">Dirección</label> </div>
+                                            <div class="col-md-8"> <input type="text" [(ngModel)]="empresa2.direccion" name="direccion"
+                                                    class="form-control" autocomplete="off" placeholder="Dirección" required>
+                                            </div>
+                                        </div>
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">RUC </label></div>
+                                            <div class="col-md-8"> <input type="text" [(ngModel)]="empresa2.ruc" name="ruc"
+                                                    class="form-control" autocomplete="off" placeholder="RUC" required></div>
+                                        </div>
+                                       <!--  <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;">Correo empresarial</div>
+                                            <div class="col-md-8"> <input type="email" [(ngModel)]="empresa2.email_empresarial"
+                                                    name="email_empresarial" class="form-control" placeholder="Correo empresarial" required></div>
+                                        </div>
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;">Correo administrador</div>
+                                            <div class="col-md-8"> <input type="email" [(ngModel)]="empresa2.email_administrador"
+                                                    name="email_administrador" class="form-control" placeholder="Correo administrador" required>
+                                            </div>
+                                        </div>
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;">Contraseña</div>
+                                            <div class="col-md-8"> <input type="text" [(ngModel)]="empresa2.contrasena" name="contraseña"
+                                                    class="form-control" placeholder="Contraseña" required></div>
+                                        </div> -->
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">Inicio de Licencia</label></div>
+                                            <div class="col-md-8"> <input type="date" [(ngModel)]="empresa2.license_begin" data-date-format="YYYY MMMM DD"
+                                                    name="license_begin_edit"  autocomplete="off" class="form-control"  required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"> <label class="datosField">Fin de Licencia</label> </div>
+                                            <div class="col-md-8"> <input type="date" [(ngModel)]="empresa2.license_end" data-date-format="YYYY MMMM DD"
+                                                    name="license_end_edit" autocomplete="off" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row espacio">
+                                            <div class="col-md-4" style="text-align: left;"><label class="datosField">Numero de Usuarios</label> </div>
+                                            <div class="col-md-8"> <input type="number" [(ngModel)]="empresa2.numUsuarios" name="numUsuarios"
+                                                    class="form-control" autocomplete="off" placeholder="Numero usuarios" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4"><button class="btn btn-block btn-success espacio" type="button"
+                                                    (click)="updateEmpresas()">Actualizar</button></div>
+                                            <div class="col-md-4"></div>               
+                                        </div>
+                                    </div>
+
+
+                                   
+                                    
+                                   
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <br><br>
+                    </div>
+    
+    
+    
+    
+                    <!-- <div id="edit" style="display: none;">
+                        <div class="row" class="fomR">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4" style="text-align: center;">
+                                        <div style="font-weight: bold;">Buscar Empresa</div>
+                                        <dx-autocomplete [dataSource]="empresasService.empresa" placeholder=""
+                                            valueExpr="nombre" [(value)]="nombreEmpresa" (onChange)="buscarEmpresa($event)">
+                                        </dx-autocomplete>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+                            </div>
+    
+    
+    
+    
+    
+    
+                        </div>
+    
+                    </div> -->
+                </div>
+            </div>
+    
+    
+    
+        </div>
+    </div>
+    
+    <dx-popup [width]="500" [height]="700" [showTitle]="true" title="Actualizar Información" [dragEnabled]="false"
+        [closeOnOutsideClick]="true" [(visible)]="popupVisible">
+        <div *dxTemplate="let data of 'content'">
+            <div class="col-md-12">
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Nombre Empresa</div>
+                    <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.nombre" name="nombre"
+                            class="form-control" placeholder="Nombre empresa" required></div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Representante</div>
+                    <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.representante" name="representante"
+                            class="form-control" placeholder="Representante" autocomplete="representante" required></div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Dirección</div>
+                    <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.direccion" name="direccion"
+                            class="form-control" placeholder="Dirección" required>
+                    </div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">RUC</div>
+                    <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.ruc" name="direccion"
+                            class="form-control" placeholder="RUC" required></div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Correo empresarial</div>
+                    <div class="col-md-8"> <input type="email" [(ngModel)]="empresa.email_empresarial"
+                            name="email_empresarial" class="form-control" placeholder="Correo empresarial" required></div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Correo administrador</div>
+                    <div class="col-md-8"> <input type="email" [(ngModel)]="empresa.email_administrador"
+                            name="email_administrador" class="form-control" placeholder="Correo administrador" required>
+                    </div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Contraseña</div>
+                    <div class="col-md-8"> <input type="text" [(ngModel)]="empresa.contrasena" name="contraseña"
+                            class="form-control" placeholder="Contraseña" required></div>
+                </div>
+                <div class="row espacio">
+                    <div class="col-md-4" style="text-align: left;">Numero de Usuarios</div>
+                    <div class="col-md-8"> <input type="number" [(ngModel)]="empresa.numUsuarios" name="numUsuarios"
+                            class="form-control" placeholder="Numero usuarios" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"><button class="btn btn2" type="button"
+                            (click)="updateEmpresas()">Actualizar</button></div>
+                    <div class="col-md-4"></div>
+    
+                </div>
+            </div>
+        </div>
+    
+    </dx-popup>
