@@ -11,6 +11,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AvatarModule } from 'ngx-avatar';
 import { BnNgIdleService } from 'bn-ng-idle'; 
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -91,6 +92,7 @@ let config = new AuthServiceConfig([
 export function provideConfig() {
   return config;
 }
+const socketConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   imports: [
@@ -132,7 +134,7 @@ export function provideConfig() {
     ReactiveFormsModule,
     PdfJsViewerModule,
     AvatarModule,
-
+    SocketIoModule.forRoot(socketConfig)
   ],
   declarations: [
     AppComponent,

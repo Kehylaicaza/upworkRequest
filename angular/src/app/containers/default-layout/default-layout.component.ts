@@ -1,3 +1,4 @@
+import { SocketOnlineService } from './../../services/socket-online.service';
 import { Component, OnInit } from '@angular/core';
 import { navItems, navItemsAdmin, navItemsSuper } from '../../_nav';
 import { AuthenService } from "../../services/authen.service";
@@ -42,7 +43,8 @@ export class DefaultLayoutComponent implements OnInit {
   correo: string = '';
 
   constructor(
-    public authService: AuthenService, private _sanitizer: DomSanitizer, private router: Router, public notiService: NotificationsService
+    public authService: AuthenService, private _sanitizer: DomSanitizer, private router: Router, public notiService: NotificationsService,
+    private socketOnlineService: SocketOnlineService
   ) { }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class DefaultLayoutComponent implements OnInit {
     this.crearPerfil()
     if (localStorage.getItem("empresaLegueada") != '') {
       this.idEmpresa = true
-
+      this.socketOnlineService.emitLogin(localStorage.getItem("empresaLegueada"));
     }
 
   }

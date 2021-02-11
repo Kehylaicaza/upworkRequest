@@ -7,7 +7,8 @@ const path = require('path');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 
 mongoose.connect(config.database, { useNewUrlParser: true });
@@ -76,15 +77,51 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-// Start Server
-app.listen(port, () => {
-  console.log('Server started on port ' + port);
-});
 
 //programar cuando corre el script
 var cron = require('node-cron');
 const Empresas = require('./models/empresas')
 const User = require('./models/user')
+
+var users ={}
+io.on('connection', function(socket){
+  console.log('Socket: client connected');
+  setInterval(function(){ io.emit('init',users);
+  }, 2000);
+  
+
+  socket.on('login', function(data){
+    console.log('a user' + data.userId + ' loggedin');
+    //saving userId to array with socket ID
+    users[socket.id] = data.userId;
+    io.emit('login', data.userId);
+    
+  });
+  socket.on('disconnect', function(){
+    const userId = users[socket.id];
+    console.log('user ' + userId + ' disconnected');
+    console.log(users)
+    delete users[socket.id];
+    //io.emit('logout', users[socket.id]);
+    const activeUserIds = Object.values(users)
+    if (activeUserIds.indexOf(userId) === -1 ) {
+      console.log(userId + 'is offline now')
+      updateEmpresas(userId)
+    } else {
+      console.log(userId + 'is online now')
+    }
+  });
+ 
+});
+
+const updateEmpresas = async (userId) => {
+  await Empresas.findByIdAndUpdate(userId, { $inc: { usuarios_activos: -1}});
+}
+
+// Start Server
+http.listen(port, function() {
+  console.log('Server started on port ' + port);
+});
 
 
 cron.schedule('57 14 * * *', () => {

@@ -10,6 +10,8 @@ import { isError } from 'util';
 import { empresa } from '../empresas/empresas';
 import { user } from '../user/user';
 import Swal from 'sweetalert2';
+import { Socket } from 'ngx-socket-io';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'login.component.html',

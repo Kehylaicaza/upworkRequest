@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs';
 import { eventsHandler } from 'devextreme/events';
 import { BnNgIdleService } from 'bn-ng-idle';
+import {io} from 'socket.io-client/build/index';
 
 export let browserRefresh = false;
 
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
   bandera: boolean = false
   subscription: Subscription;
   router2: Router
+  private socket: any;
 
   constructor(private router: Router, private authenService: AuthenService,private bnIdle: BnNgIdleService) {
     /*this.subscription = router.events.subscribe((event) => {
@@ -63,4 +65,6 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
   }
+
+  
 }
