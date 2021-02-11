@@ -97,8 +97,8 @@ io.on('connection', function(socket){
     const activeBrowserIds = Object.values(browsers)
     const userIds = Object.values(users)
     if (userIds.indexOf( data.userId) === -1 ) {
-      console.log(data.userId + 'is new login in' + data.browserToken)
-      updateEmpresas(data.userId, 1)
+      console.log(data.userId + 'is login in' + data.browserToken)
+      setEmpresas(data.userId, 1)
     } else if (activeBrowserIds.indexOf(data.browserToken) === -1 ) {
       console.log(data.userId + 'is new login in' + data.browserToken)
       updateEmpresas(data.userId, 1)
@@ -129,6 +129,10 @@ io.on('connection', function(socket){
 
 const updateEmpresas = async (userId, amount) => {
   await Empresas.findByIdAndUpdate(userId, { $inc: { usuarios_activos: amount}});
+}
+
+const setEmpresas = async (userId, amount) => {
+  await Empresas.findByIdAndUpdate(userId, { usuarios_activos: amount });
 }
 
 // Start Server
