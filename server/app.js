@@ -83,7 +83,8 @@ var cron = require('node-cron');
 const Empresas = require('./models/empresas')
 const User = require('./models/user')
 
-var users ={}
+let users = {}
+let browsers = {}
 io.on('connection', function(socket){
   console.log('Socket: client connected');
   setInterval(function(){ io.emit('init',users);
@@ -91,35 +92,47 @@ io.on('connection', function(socket){
   
 
   socket.on('login', function(data){
-    console.log('a user' + data.userId + ' loggedin');
+    console.log('a user' + data.userId + ' logged in' + data.browserToken);
     //saving userId to array with socket ID
+    const activeBrowserIds = Object.values(browsers)
+    const userIds = Object.values(users)
+    if (userIds.indexOf( data.userId) === -1 ) {
+      console.log(data.userId + 'is new login in' + data.browserToken)
+      updateEmpresas(data.userId, 1)
+    } else if (activeBrowserIds.indexOf(data.browserToken) === -1 ) {
+      console.log(data.userId + 'is new login in' + data.browserToken)
+      updateEmpresas(data.userId, 1)
+    }
     users[socket.id] = data.userId;
-    io.emit('login', data.userId);
+    browsers[socket.id] = data.browserToken;
+    //io.emit('login', data.userId);
     
   });
   socket.on('disconnect', function(){
     const userId = users[socket.id];
+    const browserId = browsers[socket.id]
     console.log('user ' + userId + ' disconnected');
     console.log(users)
     delete users[socket.id];
+    delete browsers[socket.id];
     //io.emit('logout', users[socket.id]);
-    const activeUserIds = Object.values(users)
-    if (activeUserIds.indexOf(userId) === -1 ) {
-      console.log(userId + 'is offline now')
-      updateEmpresas(userId)
+    const activeBrowserIds = Object.values(browsers)
+    if (activeBrowserIds.indexOf(browserId) === -1 ) {
+      console.log(userId + 'is offline now in' + browserId)
+      updateEmpresas(userId, -1)
     } else {
-      console.log(userId + 'is online now')
+      console.log(userId + 'is still online now')
     }
   });
  
 });
 
-const updateEmpresas = async (userId) => {
-  await Empresas.findByIdAndUpdate(userId, { $inc: { usuarios_activos: -1}});
+const updateEmpresas = async (userId, amount) => {
+  await Empresas.findByIdAndUpdate(userId, { $inc: { usuarios_activos: amount}});
 }
 
 // Start Server
-http.listen(port, function() {
+http.listen(port, function () {
   console.log('Server started on port ' + port);
 });
 

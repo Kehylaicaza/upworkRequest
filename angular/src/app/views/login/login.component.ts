@@ -10,7 +10,16 @@ import { isError } from 'util';
 import { empresa } from '../empresas/empresas';
 import { user } from '../user/user';
 import Swal from 'sweetalert2';
-import { Socket } from 'ngx-socket-io';
+
+const randomString = (length) => {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -42,6 +51,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['dashboard'])
     } else {
       localStorage.removeItem('token');
+      localStorage.removeItem('browserToken');
       if ("maily" in localStorage) {
         localStorage.removeItem('maily');
       }
@@ -87,6 +97,7 @@ export class LoginComponent implements OnInit {
             if (res.user.status == "Activo") {
               localStorage.setItem('maily', res.user.email);
               localStorage.setItem('token', res.token);
+              localStorage.setItem('browserToken', randomString(10))
               if (res.user.rol == "Usuario") {
                 this.empresa1 = res.user.empresa[0].nombre
                 this.empresasService.getOnlyEmpresa(this.empresa1).subscribe(res => {

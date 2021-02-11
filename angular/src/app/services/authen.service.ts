@@ -78,6 +78,7 @@ export class AuthenService {
       this.empresasService.updateEmpresas(empresa).subscribe(res => {
 
         localStorage.removeItem('token');
+        localStorage.removeItem('browserToken');
         this.router.navigate(['/login']);
       })
     })
@@ -108,6 +109,7 @@ export class AuthenService {
       this.empresasService.updateEmpresas(empresa).subscribe(res => {
 
         localStorage.removeItem('token');
+        localStorage.removeItem('browserToken');
         this.router.navigate(['/login']);
       })
     })
@@ -120,6 +122,7 @@ export class AuthenService {
 
   logoutTimer() {
     localStorage.removeItem('token');
+    localStorage.removeItem('browserToken');
 
     this.router.navigate(['/login']);
 

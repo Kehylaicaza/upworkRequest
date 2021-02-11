@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
         console.log("refreshx2" + this.bandera)
       }
     });*/
-
     this.bnIdle.startWatching(900).subscribe((res) => {
       if(res) {
           console.log("session expired");
